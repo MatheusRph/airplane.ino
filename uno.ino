@@ -21,7 +21,7 @@ struct Dados_para_enviar {
 };
 
 // //Cria uma variavel para dados_para_enviar
-dados_para_enviar dados_enviados;
+Dados_para_enviar dados_enviados;
 
 void setup() {
     radio.begin();  //Inicializa a comunicação wireless
