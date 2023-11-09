@@ -1,0 +1,45 @@
+#include <Servo.h>
+
+Servo aeleron;
+Servo elevator;
+
+#define botao 12
+#define botao2 13
+
+int valorbotao = 0;
+int valorbotao2 = 0;
+
+int posInc = 0; // Defina o valor inicial como 20 graus
+
+void setup() {
+  pinMode(botao, INPUT);
+  pinMode(botao2, INPUT);
+  aeleron.attach(9);  // Pino do servo 1
+  elevator.attach(10); // Pino do servo 2
+
+  Serial.begin(9600); // Inicializa a comunicação serial
+}
+
+void loop() {
+  valorbotao = digitalRead(botao);
+  valorbotao2 = digitalRead(botao2);
+
+  if (valorbotao == HIGH) {
+    posInc += 10; // Incrementa 10 graus quando o primeiro botão é pressionado
+  }
+
+  if (valorbotao2 == HIGH) {
+    posInc += 10; // Incrementa 10 graus quando o segundo botão é pressionado
+  }
+
+  int joyXVal = analogRead(A0);
+  int joyYVal = analogRead(A1);
+
+  int aeleronAngle = map(joyXVal, 0, 1023, posInc, 180);
+  int elevatorAngle = map(joyYVal, 0, 1023, 0, 180);
+
+  aeleron.write(aeleronAngle);
+  elevator.write(elevatorAngle);
+
+  delay(10); // Ajuste o valor do atraso conforme necessário
+}
